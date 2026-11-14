@@ -155,21 +155,25 @@ The following waveforms demonstrate clock generation with an input frequency of 
 
 The zoomed waveform illustrates the high and low transition intervals of the generated clock signal.
 
-![Zoomed Clock Waveform](waveform_zoomed.png)
+<p align="center">
+  <img src="waveform_zoomed.png" alt="Zoomed ModelSim Clock Waveform" width="900">
+</p>
 
-**Figure 1: Zoomed ModelSim waveform showing the 7 ns high-time interval and 13 ns low-time interval.**
-
-[View Full-Size Zoomed Waveform](waveform_zoomed.png)
+<p align="center">
+  <b>Figure 1: Zoomed ModelSim waveform showing the 7 ns high-time interval and 13 ns low-time interval.</b>
+</p>
 
 ### 9.2 Full Simulation Waveform
 
 The following waveform demonstrates continuous clock generation throughout the 500 ns simulation duration.
 
-![Full Clock Waveform](waveform_full.png)
+<p align="center">
+  <img src="waveform_full.png" alt="Full ModelSim Clock Waveform" width="900">
+</p>
 
-**Figure 2: Full ModelSim simulation waveform showing continuous clock generation over 500 ns.**
-
-[View Full-Size Simulation Waveform](waveform_full.png)
+<p align="center">
+  <b>Figure 2: Full ModelSim simulation waveform showing continuous clock generation over 500 ns.</b>
+</p>
 
 ### Waveform Observations
 
