@@ -1,212 +1,232 @@
 # User-Defined Clock Generation with Variable Duty Cycle using Verilog HDL
 
+<p align="center">
+  <b>Verilog HDL | ModelSim 2020.1 | GVim</b>
+</p>
+
+---
+
 ## 1. Project Overview
 
-This project demonstrates the design and simulation of a user-defined clock generator with variable frequency and duty cycle using Verilog HDL.
+This project focuses on the design and simulation of a **User-Defined Clock Generator with Variable Duty Cycle** using Verilog Hardware Description Language (HDL).
 
-The design allows users to dynamically specify both clock frequency and duty cycle during simulation through the `$value$plusargs` system task.
+The design allows the user to specify the clock frequency and duty cycle through runtime parameters. Based on the user-defined inputs, the clock generator produces a periodic digital clock signal with the corresponding HIGH and LOW durations.
 
-Based on the user-provided inputs, the clock period, high time, and low time are automatically calculated to generate the desired clock waveform without modifying the Verilog source code.
+The project demonstrates the fundamental concepts of clock generation, frequency control, time-period calculation, and duty-cycle variation in digital systems.
 
-The design is developed using GVim and simulated using ModelSim 2020.1.
+## 2. Objectives
 
-## 2. Tools and Technologies
+- To design a user-defined clock generator using Verilog HDL.
+- To generate clock signals with a user-defined frequency.
+- To understand and implement variable duty-cycle control.
+- To calculate the HIGH and LOW time intervals of a clock signal.
+- To simulate and verify the generated clock waveform using ModelSim.
+- To understand the relationship between frequency, time period, and duty cycle.
 
-- **Hardware Description Language:** Verilog HDL
-- **Simulation Tool:** ModelSim 2020.1
-- **Code Editor:** GVim
-- **Simulation Automation:** ModelSim DO Script
+## 3. Tools and Technologies
 
-## 3. Project Files
+| Tool / Technology | Description |
+|:---|:---|
+| Verilog HDL | Hardware Description Language used for design |
+| ModelSim 2020.1 | HDL compilation and simulation |
+| GVim | Verilog source-code editing |
+| Windows / Linux | Development environment |
+
+## 4. Repository Structure
+
+The repository contains the following files:
+
+```text
+User-Defined-Clock-Generation-Variable-Duty-Cycle/
+│
+├── clkg_ufd.v
+├── run.do
+├── waveform_zoomed.png
+├── waveform_full.png
+└── README.md
+```
 
 | File Name | Description |
-|---|---|
-| `clkg_ufd.v` | Verilog source code for variable frequency and duty cycle clock generation |
-| `run.do` | ModelSim automation script |
-| `waveform_zoomed.png` | Zoomed clock simulation waveform |
-| `waveform_full.png` | Full simulation waveform |
+|:---|:---|
+| `clkg_ufd.v` | Verilog HDL source code for clock generation |
+| `run.do` | ModelSim simulation and execution script |
+| `waveform_zoomed.png` | Zoomed view of the generated clock waveform |
+| `waveform_full.png` | Complete simulation waveform |
 | `README.md` | Project documentation |
 
-## 4. Working Principle
+## 5. Design Specifications
 
-1. The user provides the desired clock frequency through the `freq` runtime argument.
-2. The user provides the desired duty cycle through the `duty` runtime argument.
-3. The `$value$plusargs` system task reads both input parameters during simulation.
-4. The clock period is calculated based on the specified frequency.
-5. The high and low durations are calculated using the specified duty cycle.
-6. A `forever` loop continuously generates the clock waveform with the desired timing characteristics.
-7. The simulation terminates after 500 ns using the `$finish` system task.
-
-## 5. Mathematical Formulation
-
-### Clock Period
-
-\[
-T = \frac{1}{f}
-\]
-
-For frequency in MHz and time period in ns:
-
-\[
-T(ns) = \frac{1000}{f(MHz)}
-\]
-
-### High Time
-
-\[
-T_{HIGH} = \frac{Duty\ Cycle}{100}\times T
-\]
-
-### Low Time
-
-\[
-T_{LOW} = \frac{100-Duty\ Cycle}{100}\times T
-\]
-
-### Duty Cycle
-
-\[
-Duty\ Cycle(\%) =
-\frac{T_{HIGH}}{T}\times100
-\]
-
-## 6. Simulation Parameters
-
-The following input parameters were used in the ModelSim simulation:
+The following values are used for the example simulation:
 
 | Parameter | Value |
-|---|---:|
-| Input Frequency | 50 MHz |
-| Input Duty Cycle | 35% |
+|:---|---:|
+| Clock Frequency | 50 MHz |
 | Clock Period | 20 ns |
-| High Time | 7 ns |
-| Low Time | 13 ns |
-| Simulation Duration | 500 ns |
+| Duty Cycle | 35% |
+| HIGH Duration | 7 ns |
+| LOW Duration | 13 ns |
+| Simulation Time | 500 ns |
 
-### Calculation
+## 6. Theoretical Background
 
-For an input frequency of 50 MHz:
+### 6.1 Clock Signal
 
-\[
-T = \frac{1000}{50}=20\ ns
-\]
+A clock signal is a periodic digital waveform that alternates between logic HIGH (1) and logic LOW (0). It provides timing and synchronization for digital circuits and sequential systems.
 
-For a duty cycle of 35%:
+### 6.2 Clock Frequency
 
-\[
-T_{HIGH} = \frac{35}{100}\times20=7\ ns
-\]
+Clock frequency represents the number of complete clock cycles occurring in one second. It is measured in Hertz (Hz).
 
 \[
-T_{LOW} = \frac{65}{100}\times20=13\ ns
+f=\frac{1}{T}
 \]
 
-Therefore, the generated clock has a 20 ns time period, with 7 ns high time and 13 ns low time.
+Where:
 
-## 7. ModelSim Simulation Procedure
+- \(f\) = Clock frequency
+- \(T\) = Time period
 
-### Step 1: Compile the Verilog Design
+### 6.3 Time Period
+
+The time period is the time required to complete one full clock cycle.
+
+\[
+T=\frac{1}{f}
+\]
+
+For a clock frequency of 50 MHz:
+
+\[
+T=\frac{1}{50\times10^6}
+\]
+
+\[
+\boxed{T=20\ ns}
+\]
+
+### 6.4 Duty Cycle
+
+Duty cycle represents the percentage of one clock period during which the clock signal remains at logic HIGH.
+
+\[
+Duty\ Cycle=\frac{T_{ON}}{T}\times100
+\]
+
+Where:
+
+- \(T_{ON}\) = HIGH time
+- \(T_{OFF}\) = LOW time
+- \(T\) = Total clock period
+
+The HIGH duration is calculated as:
+
+\[
+T_{ON}=\frac{Duty\ Cycle}{100}\times T
+\]
+
+The LOW duration is calculated as:
+
+\[
+T_{OFF}=T-T_{ON}
+\]
+
+For a 35% duty cycle and a 20 ns clock period:
+
+\[
+T_{ON}=0.35\times20=7\ ns
+\]
+
+\[
+T_{OFF}=20-7=13\ ns
+\]
+
+Therefore, the generated clock has a HIGH duration of 7 ns and a LOW duration of 13 ns.
+
+## 7. Design Methodology
+
+The clock generation process follows these steps:
+
+1. Read the user-defined clock frequency.
+2. Read the user-defined duty-cycle value.
+3. Calculate the clock time period.
+4. Calculate the HIGH duration using the duty-cycle percentage.
+5. Calculate the LOW duration using the remaining clock period.
+6. Generate the clock waveform by applying the calculated HIGH and LOW delays.
+7. Continue clock generation until the simulation finishes.
+
+## 8. Simulation Setup
+
+### 8.1 ModelSim Commands
+
+The following commands can be executed in the ModelSim Transcript window:
 
 ```tcl
 vlog clkg_ufd.v -l comp.log
-```
-
-### Step 2: Elaborate and Load the Design
-
-```tcl
 vsim -voptargs=+acc clkg_ufd +freq=50 +duty=35
-```
-
-### Step 3: Add Signals to the Waveform Window
-
-```tcl
 add wave sim:/clkg_ufd/*
-```
-
-### Step 4: Run the Simulation
-
-```tcl
 run -all
 ```
 
-## 8. Simulation Automation Using run.do
+### 8.2 Command Description
 
-The `run.do` script automates the ModelSim simulation process.
-
-It performs the following operations:
-
-- Compilation of the Verilog source file.
-- Loading and elaboration of the design.
-- Passing user-defined frequency and duty cycle values.
-- Adding design signals to the waveform viewer.
-- Executing the simulation.
-
-To execute the complete simulation automatically, enter:
-
-```tcl
-do run.do
-```
+| Command | Function |
+|:---|:---|
+| `vlog` | Compiles the Verilog source file |
+| `vsim` | Loads the design for simulation |
+| `+freq=50` | Provides the clock frequency as a runtime parameter |
+| `+duty=35` | Provides the duty cycle as a runtime parameter |
+| `add wave` | Adds design signals to the waveform window |
+| `run -all` | Executes the simulation |
 
 ## 9. Simulation Results
 
-The following waveforms demonstrate clock generation with an input frequency of 50 MHz and a duty cycle of 35%, simulated using ModelSim 2020.1.
+### 9.1 Zoomed Simulation Waveform
 
-### 9.1 Zoomed Clock Waveform
-
-The zoomed waveform illustrates the high and low transition intervals of the generated clock signal.
+The zoomed waveform is used to observe the individual HIGH and LOW durations of the generated clock signal.
 
 <p align="center">
-  <img src="waveform_zoomed.png" alt="Zoomed ModelSim Clock Waveform" width="900">
+  <img src="waveform_zoomed.png"
+       alt="Zoomed Clock Waveform"
+       width="900">
 </p>
 
 <p align="center">
-  <b>Figure 1: Zoomed ModelSim waveform showing the 7 ns high-time interval and 13 ns low-time interval.</b>
+  <b>Figure 1: Zoomed ModelSim Simulation Waveform showing the variable duty-cycle clock.</b>
 </p>
 
 ### 9.2 Full Simulation Waveform
 
-The following waveform demonstrates continuous clock generation throughout the 500 ns simulation duration.
+The full waveform illustrates the periodic clock generation throughout the simulation duration.
 
 <p align="center">
-  <img src="waveform_full.png" alt="Full ModelSim Clock Waveform" width="900">
+  <img src="waveform_full.png"
+       alt="Full Clock Simulation Waveform"
+       width="900">
 </p>
 
 <p align="center">
-  <b>Figure 2: Full ModelSim simulation waveform showing continuous clock generation over 500 ns.</b>
+  <b>Figure 2: Full ModelSim Simulation Waveform.</b>
 </p>
 
-### Waveform Observations
+## 10. Calculated and Expected Results
 
-- Input frequency = 50 MHz.
-- Clock period = 20 ns.
-- High duration = 7 ns.
-- Low duration = 13 ns.
-- Duty cycle = 35%.
-- Continuous clock generation throughout the simulation.
+For the example input of 50 MHz frequency and 35% duty cycle:
 
-The simulation results verify the generation of a clock signal with user-defined frequency and duty cycle.
+| Parameter | Calculated Value |
+|:---|---:|
+| Frequency | 50 MHz |
+| Time Period | 20 ns |
+| Duty Cycle | 35% |
+| HIGH Time | 7 ns |
+| LOW Time | 13 ns |
+| Number of Clock Cycles in 500 ns | 25 |
 
-## 10. Key Verilog Concepts Used
+The generated waveform should exhibit a 20 ns clock period, with the signal remaining HIGH for 7 ns and LOW for 13 ns in every complete cycle.
 
-- `$value$plusargs` system task
-- Real data type
-- Initial procedural block
-- `forever` loop
-- Delay control
-- Runtime parameter passing
-- Clock period calculation
-- Variable duty cycle generation
-- `$finish` system task
+## 11. Key Observations
 
-## 11. Learning Outcomes
-
-- Understanding clock generation using Verilog HDL.
-- Implementing runtime-configurable frequency and duty cycle.
-- Understanding clock period and duty cycle calculations.
-- Using `$value$plusargs` for dynamic simulation parameters.
-- Automating simulation using ModelSim DO scripts.
-- Verifying clock timing characteristics through waveform analysis.
-
-## 12. Author
-
-M.Tech VLSI Design Student
+- The clock frequency determines the total clock period.
+- Duty-cycle variation changes the HIGH and LOW durations without changing the total clock period.
+- A 35% duty cycle means that the clock remains HIGH for 35% of the total period.
+- The remaining 65% of the period corresponds to the LOW duration.
+- ModelSim waveform analysis helps verify the timing characteristics of
